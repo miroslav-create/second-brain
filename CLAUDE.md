@@ -49,7 +49,7 @@ second-brain/
 - Notion access via `mcp__claude_ai_Notion__*` MCP tools.
 
 ### Skills available
-- `/triage` — read Obsidian daily `## Inbox` + Notion private Kanban Inbox → propose disposition per item.
+- `/inbox` — read Obsidian daily `## Inbox` + Notion private Kanban Inbox → propose disposition per item. (Renamed from `/triage` to avoid collision with Matt Pocock issue-tracker skill in parent dir.)
 - `/spar` — partner-mode grilling on a decision or design. Updates `CONTEXT.md` as terms resolve.
 - `/draft` — bullets/notes → polished prose (Notion page, Slack/email, spec section).
 

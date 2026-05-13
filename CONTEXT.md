@@ -30,9 +30,9 @@
 ## Workflow primitives
 
 - **Task** — atomic unit on private Kanban. Min 15 min. Larger items broken into atoms in `vault/projects/` first; only atoms land on board.
-- **Inbox** — two physical locations: Obsidian daily note `## Inbox` section, and Notion private Kanban `Inbox` column. Both drained by `/triage`.
+- **Inbox** — two physical locations: Obsidian daily note `## Inbox` section, and Notion private Kanban `Inbox` column. Both drained by `/inbox`.
 - **Hat** — one of Miroslav's roles (BA, PO, PM, Delivery, AI-Amb, IT-Analyst). Not currently a Kanban property; surfaces in project notes.
-- **Triage** — on-demand pass through both inboxes producing per-item decisions. Run via `/triage`. No fixed schedule.
+- **Triage** — on-demand pass through both inboxes producing per-item decisions. Run via `/inbox`. No fixed schedule.
 - **Evergreen note** — atomic, self-contained concept note in `vault/evergreen/`. Written in user's words. Linked to other evergreens via `[[wikilinks]]`.
 - **Daily note** — `vault/daily/YYYY-MM-DD.md`. Capture entry point + day's reasoning log + tomorrow nudge.
 - **Project note** — `vault/projects/<slug>.md`. One per active piece of work. Holds why/outcome/stakeholders/open-questions/decisions/links.

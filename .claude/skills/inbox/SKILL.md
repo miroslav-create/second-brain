@@ -1,9 +1,9 @@
 ---
-name: triage
-description: Drain Obsidian daily inbox + Notion private Kanban Inbox. Propose disposition per item (Notion task / evergreen note / discard). User confirms batch. Invoke when user types /triage.
+name: inbox
+description: Drain Obsidian daily inbox + Notion private Kanban Inbox. Propose disposition per item (Notion task / evergreen note / discard). User confirms batch. Invoke when user types /inbox.
 ---
 
-# /triage — inbox sweep
+# /inbox — inbox sweep
 
 ## What to do
 

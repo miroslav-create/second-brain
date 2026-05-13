@@ -13,7 +13,7 @@ tags: [daily]
 # <% tp.date.now("YYYY-MM-DD, dddd") %>
 
 ## Inbox
-<!-- Drop any thought, task, idea, link here. `/triage` reads this section. -->
+<!-- Drop any thought, task, idea, link here. `/inbox` reads this section. -->
 - 
 
 ## Doing today
