@@ -15,7 +15,12 @@
 ## Tools
 
 - **Workspace (Notion)** — `pojistovnadirect`, shared across Direct group. Public DBs visible to all ~27 staff; private spaces per user.
-- **Team boards (Notion, public)** — Primary Kanban, DEV, Product, Meetings. Reference only.
+- **Team boards (Notion, public)** — reference only, never duplicate into private Kanban.
+  - Primary Kanban: `28818e00108d809dbc90d542a6ace557`
+  - DEV: `2b518e00108d80bc9d44e8ebe005118a`
+  - Product: `27218e00108d807ca79bd7023d89c8ef`
+  - Meetings: `28b18e00108d80c0a6bbc208b2801f3d`
+- **Notion MCP access** — `mcp__claude_ai_Notion__*` tools.
 - **Private Kanban (Notion)** — Miroslav's personal board "Second Brain" in his private space.
   - Database ID: `35f18e00108d80c3985bcecb788758e2`
   - Data source ID: `35f18e00-108d-8068-86a6-000b6c14f3c0`
