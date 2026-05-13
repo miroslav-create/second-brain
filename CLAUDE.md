@@ -40,7 +40,7 @@ second-brain/
 
 ### Notion bindings
 - Workspace: `pojistovnadirect` (shared across Direct group, includes Fondee).
-- **Private Kanban** (this user's personal board) — DB ID captured in `CONTEXT.md` after creation. Schema: `Status | Type | Due`.
+- **Private Kanban** "Second Brain" — DB ID `35f18e00108d80c3985bcecb788758e2`, data source ID `35f18e00-108d-8068-86a6-000b6c14f3c0`. Active props: `Task name`, `Status`, `Type`, `Due`. `Assignee` exists but hidden — ignore. Status options: `Inbox | Today | Doing | Waiting | Done | Archive`.
 - **Public team boards** (reference only — NEVER duplicate work into private board):
   - Primary Kanban: `28818e00108d809dbc90d542a6ace557`
   - DEV: `2b518e00108d80bc9d44e8ebe005118a`

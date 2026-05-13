@@ -16,7 +16,13 @@
 
 - **Workspace (Notion)** — `pojistovnadirect`, shared across Direct group. Public DBs visible to all ~27 staff; private spaces per user.
 - **Team boards (Notion, public)** — Primary Kanban, DEV, Product, Meetings. Reference only.
-- **Private Kanban (Notion)** — Miroslav's personal board in his private space. Schema `Status | Type | Due`. DB ID: _TBD after creation_.
+- **Private Kanban (Notion)** — Miroslav's personal board "Second Brain" in his private space.
+  - Database ID: `35f18e00108d80c3985bcecb788758e2`
+  - Data source ID: `35f18e00-108d-8068-86a6-000b6c14f3c0`
+  - URL: https://www.notion.so/pojistovnadirect/35f18e00108d80c3985bcecb788758e2
+  - Active schema: `Task name` (title), `Status` (status), `Type` (select: delivery|code|learn|admin|people|decision), `Due` (date), `Assignee` (person — vestigial, hidden in UI).
+  - Status options (set in Notion UI by user): `Inbox | Today | Doing | Waiting | Done | Archive`.
+  - Caveat: DB is "typed" (Notion Tasks template). API can't drop `Assignee` or change `Status` type. User hides `Assignee` column.
 - **Vault (Obsidian)** — markdown PKM at `Projects\second-brain\vault\`. Folders: daily, people, projects, evergreen, meetings, reference, canvas, _archive, _templates.
 - **Old vault** — was at `Dokumenty\Obsidian`. Copied (read-only) to `vault\_archive\` on 2026-05-13. Excluded from graph view.
 - **Claude Code** — invoked from `Projects\second-brain\` working dir.
