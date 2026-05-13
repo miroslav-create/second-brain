@@ -26,7 +26,7 @@
   - Data source ID: `35f18e00-108d-8068-86a6-000b6c14f3c0`
   - URL: https://www.notion.so/pojistovnadirect/35f18e00108d80c3985bcecb788758e2
   - Active schema: `Task name` (title), `Status` (status), `Type` (select: delivery|code|learn|admin|people|decision), `Due` (date), `Assignee` (person — vestigial, hidden in UI).
-  - Status options: `Inbox | Today | Doing | Waiting | Done` (live). `Archive` planned — pending Notion UI add (API rejects status-option mutation).
+  - Status options (live): `Inbox | Today | Doing | Waiting | Done | Archive`. Mutation of options API-rejected (typed Status property) — UI-only.
   - Caveat: DB is "typed" (Notion Tasks template). API can't drop `Assignee` or change `Status` type. User hides `Assignee` column.
   - **MCP limitation**: Notion MCP does not expose page-archive or page-trash actions. To remove rows from sight without UI: set `Status=Done` and prefix title with `[discarded]`. True trash = user action in Notion UI.
 - **Vault (Obsidian)** — markdown PKM at `Projects\second-brain\vault\`. Folders: daily, people, projects, evergreen, meetings, reference, canvas, _archive, _templates.

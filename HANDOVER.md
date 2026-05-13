@@ -38,25 +38,27 @@ For the live glossary including all IDs: [`CONTEXT.md`](CONTEXT.md).
   - `user_role.md`, `project_second_brain.md`, `feedback_no_rituals.md`, `MEMORY.md`.
 
 ### Open / pending user actions
-1. **Notion UI — delete 4 duplicate views** prefixed `[dup-delete]`. Right-click each tab → Delete view. (Why: second session created views via MCP without checking that 4 same-named views already existed. Correct workflow now codified — see "Live views" below.)
-2. **Notion UI — fix `Inbox` view filter**: current `simpleFilters` value is `Status=Today` (bug from initial setup). Open `Inbox` view → Filter → change to `Status is Inbox`. MCP `notion-update-view` DSL writes to `advancedFilter`, doesn't touch legacy `simpleFilters` — so cannot fix from API.
-3. **Notion UI — Status `Archive` option**: API rejects mutation of typed Status property options. User to add via Notion → DB → Status property → Edit options → Add `Archive`.
-4. **Notion UI — hide `Assignee` column** in all 4 views (right-click column header → Hide property). API can't drop typed Assignee property.
-5. **Old vault retirement**: remove `Dokumenty\Obsidian` from Obsidian's vault list (Obsidian → Manage Vaults → remove). Folder can stay on disk; just stop opening it.
+_None as of 2026-05-13 (second session)._
 
-### Live views on private Kanban (post-cleanup these are the 4 to keep)
-| Name | Type | View ID | Filter status |
-|--|--|--|--|
-| Board by Status | board, GROUP BY Status | `35f18e00-108d-804f-af08-000c806fdc2e` | n/a |
-| Today | board, GROUP BY Status, filter Status=Today | `35f18e00-108d-8006-b036-000c2d553494` | ✓ working (legacy simpleFilters) |
-| Inbox | board, GROUP BY Status, filter Status=Today | `35f18e00-108d-80dc-87f7-000c01269a68` | ⚠ user fix needed (see #2) |
-| By Type | board, GROUP BY Type | `35f18e00-108d-806d-b4fa-000cd42eb86d` | n/a |
-| All Tasks | table (Notion default) | `35f18e00-108d-806e-aac4-000c21c0d033` | n/a — keep |
+### Live views on private Kanban
+| Name | Type | View ID |
+|--|--|--|
+| Board by Status | board, GROUP BY Status | `35f18e00-108d-804f-af08-000c806fdc2e` |
+| Today | board, GROUP BY Status, filter Status=Today | `35f18e00-108d-8006-b036-000c2d553494` |
+| Inbox | board, GROUP BY Status, filter Status=Inbox | `35f18e00-108d-80dc-87f7-000c01269a68` |
+| By Type | board, GROUP BY Type | `35f18e00-108d-806d-b4fa-000cd42eb86d` |
+| All Tasks | table (Notion default) | `35f18e00-108d-806e-aac4-000c21c0d033` |
+
+Assignee absent from `displayProperties` on all keeper boards — hidden. Status options now `Inbox | Today | Doing | Waiting | Done | Archive`.
 
 ### Resolved 2026-05-13 (second session)
-- Initial git push done. Branch `main` tracks `origin/main`. Hourly auto-push via Obsidian Git now operational.
+- Initial git push done. Branch `main` tracks `origin/main`. Hourly auto-push via Obsidian Git operational.
 - CLAUDE.md slimmed to <150 words. Team-board IDs hoisted to CONTEXT.md.
-- Detected 4 pre-existing views on DB (created in earlier setup) — first design plan claimed views needed to be created. Fact-check via `notion-fetch` on DB ID would have caught this. **Procedure now: always `notion-fetch <db_id>` before creating views.**
+- 4 duplicate views from MCP create_view round deleted by user; pre-existing boards restored to board type after accidental table-conversion during cleanup.
+- `Archive` status option added in UI. `Inbox` view filter fixed (was bugged to Status=Today since initial setup).
+- Detected 4 pre-existing views on DB (created in earlier setup) — first design plan claimed views needed to be created. **Procedure now: always `notion-fetch <db_id>` before creating views.**
+- View type (board ↔ table) not settable via MCP `notion-update-view` — only via Notion UI Layout setting. Codified in Known limitations.
+- Old vault retired: `Dokumenty\Obsidian` removed from Obsidian's vault list.
 
 ### Known limitations (durable — codify, don't keep re-discovering)
 - **Notion typed-collection lock**: Tasks-template DBs in Notion mark certain properties as "required". The MCP cannot:
@@ -66,6 +68,7 @@ For the live glossary including all IDs: [`CONTEXT.md`](CONTEXT.md).
 - **Notion MCP DSL — status filter gap**: `FILTER "<status-property>" = "<option>"` and `IN ("<option>")` both silently produce empty `advancedFilter.filters` arrays on view create/update. Same DSL on `select` properties binds correctly. Workaround: filter status views in Notion UI. Re-test on future MCP versions.
 - **Notion MCP DSL — `simpleFilters` legacy schema not writable**: views created in Notion UI may carry filters under `simpleFilters` (legacy schema) instead of `advancedFilter`. MCP `notion-update-view` DSL writes only to `advancedFilter`, leaving any `simpleFilters` intact. Net effect: can't fix or remove legacy filters via API. UI required.
 - **No view delete via MCP**: `notion-update-view` has no trash flag and no `delete-view` tool exists. Duplicate / unwanted views must be deleted via Notion UI (right-click tab → Delete view). Mitigation: rename via `notion-update-view` with `[dup-delete]` prefix so user can spot them.
+- **No view-type setter via MCP**: `notion-update-view` accepts `name` + `configure` only — no way to flip a table view to a board (or vice-versa). UI-only via Layout selector.
 - **Notion MCP archive/trash gap**: `notion-update-page` / equivalent does not expose page archive or trash. To "discard" a row: set `Status=Done` and prepend `[discarded] ` to the title. True trash = manual user action in Notion UI. Codified in `.claude/skills/inbox/SKILL.md`.
 - **Skill name collision**: parent `Projects\.claude\skills\triage` is Matt Pocock's issue-tracker skill. Shadows anything called `/triage` when CC is launched outside `second-brain/`. Our workflow skill is named `/inbox` to avoid this. Always launch CC from inside this dir for skill visibility.
 - **No voice / transcription**: explicitly rejected by user during design. Mobile capture is type-only.
