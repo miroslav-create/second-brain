@@ -1,23 +1,8 @@
-# Obsidian local state — not portable across devices
-vault/.obsidian/workspace*
-vault/.obsidian/cache
-vault/.obsidian/plugins/*/data.json
-
-# Working scratch — never commit
-inbox-cache/
-
-# Large binaries
-*.zip
-*.pdf
-*.mp4
-*.mov
-*.psd
-
-# OS junk
+﻿vault/.obsidian/workspace
+vault/.obsidian/workspace.json
+vault/.obsidian/workspace-mobile.json
+vault/.trash/
 .DS_Store
 Thumbs.db
-desktop.ini
 
-# Editor
-.vscode/
-.idea/
+vault/.obsidian/plugins/*/data.json
