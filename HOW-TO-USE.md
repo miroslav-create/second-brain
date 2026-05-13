@@ -27,7 +27,21 @@ You'll be in one of four situations when an idea/task hits. Each has a target:
 | On phone, walking, in the shower         | Type into Notion mobile (work) or Obsidian mobile (thinking)           |
 | In a meeting                             | Bullet outcomes → Notion **Meetings DB** (team). Long reasoning → Obsidian `vault/meetings/meeting-YYYY-MM-DD-topic.md` |
 
-**No voice.** No transcription pipeline. Type or skip.
+**No voice.** No transcription pipeline. Type or skip. (Note: native OS dictation on phone is allowed — it's just typing-with-mouth, not a pipeline. iOS / Android system mic into Notion mobile works.)
+
+---
+
+## The inbox thermometer (5-sec daily measurement)
+
+Daily note template injects `**Notion Inbox count:** ___` line in the `## Inbox` section. Glance at Notion DB Inbox column, count rows, write the number. Done.
+
+**Why**: tests the on-demand-only bet. If 7-day rolling avg stays below 15 — system holds, no ritual needed. If it crosses 15 — add a Friday afternoon skim ritual. Pre-committed threshold; no negotiating after the fact.
+
+**Where to check the trend**: after 1-2 weeks, grep daily notes:
+```
+grep "Notion Inbox count" vault/daily/*.md
+```
+Eye the trend. ~5 minutes once a fortnight.
 
 ---
 
@@ -68,6 +82,14 @@ What it does: takes your messy bullets/notes and produces a polished draft for a
 
 **When to run it:** when you have notes but staring at the page. "Make me a 3-paragraph email to Anna telling her X" → done in 20 sec. Always ask CC about audience, tone, language (CZ/EN) once if unclear.
 
+### Hand-offs between skills
+Each SKILL.md has explicit hand-off recommendations:
+- `/inbox` → suggests `/draft` if a triaged item needs polished prose, or `/spar` if it raises a design question (not a task).
+- `/spar` → suggests `/draft` when decision resolves and outcome needs prose, or `/inbox` if a follow-up task surfaces.
+- `/draft` → suggests `/inbox` if input is raw / not triaged, or `/spar` if user is mid-decision.
+
+You can always override. The hand-offs are nudges, not rules.
+
 ---
 
 ## Working in Obsidian — a few rules
@@ -82,17 +104,23 @@ What it does: takes your messy bullets/notes and produces a polished draft for a
 
 ## Working in Notion — what's on the board
 
-DB: **Second Brain** (URL in `CONTEXT.md`). One row per task.
+DB: **Second Brain** (URL in `CONTEXT.md`). One row per task. Plain DB (no Tasks template) since 2026-05-13 — full API control.
 
 Columns to set:
 - **Task name** — what you'll do, verb first if possible
-- **Status** — `Inbox` (just landed) → `Today` (committed to today) → `Doing` (currently doing) → `Waiting` (blocked, note who/what in description) → `Done`
+- **Status** — `Inbox` (just landed) → `Today` (committed to today) → `Doing` (currently doing) → `Waiting` (blocked, note who/what in description) → `Done` → `Archive` (long-tail done items pruned from main views)
 - **Type** — `delivery | code | learn | admin | people | decision`
 - **Due** — only set if it's a real deadline (don't invent due dates)
+- **Project** — the thread this task belongs to. Options mirror `vault/projects/<slug>.md` filenames. Leave as `_unassigned_` for ad-hoc work.
 
-Columns to ignore: **Assignee** (left in by Notion template, hidden in views — single-user board).
+Views: `Board by Status`, `Today`, `Inbox`, `By Type`, `By Project`, `All Tasks`.
 
 If a task has a long breakdown, paste a link/URL to the Obsidian note in the task description body. No formal relation property.
+
+### Project sync convention
+- **New project**: create `vault/projects/<slug>.md` FIRST, then add that slug as a `Project` option in Notion (any cell → `Project` → `+ Add option` → type slug). ~10 sec extra at project birth.
+- **Ended project**: archive the vault file OR rename Project option to `[archived] <slug>` to retire while keeping historical tagging on old tasks.
+- **No Hat property** by design. Hat-level filtering happens via project metadata in vault frontmatter (`vault/projects/<slug>.md` can have `hat: BA` / `hat: PO` etc.) — not on Notion.
 
 ---
 
@@ -133,12 +161,14 @@ It auto-renders the network of `[[wikilinks]]` between notes. To make it useful:
 c:\Users\miroslav.zachar\OneDrive - Direct\Projects\second-brain\
 ├── HOW-TO-USE.md         ← this file
 ├── HANDOVER.md           ← state of system, for future CC sessions
-├── CLAUDE.md             ← Claude reads this on launch
+├── CLAUDE.md             ← Claude reads this on launch (~150 words)
 ├── CONTEXT.md            ← live glossary (people, terms, IDs)
+├── docs/                 ← frozen historical records (design plans etc.)
+│   └── design-2026-05-13.md  ← original /grill-with-docs plan
 ├── vault/                ← your Obsidian vault
-│   ├── daily/            ← daily notes
+│   ├── daily/            ← daily notes (with thermometer line)
 │   ├── people/           ← one note per colleague
-│   ├── projects/         ← project breakdowns
+│   ├── projects/         ← project breakdowns (filename = Notion Project slug)
 │   ├── evergreen/        ← atomic concept notes (the PKM)
 │   ├── meetings/         ← long-form meeting reasoning
 │   ├── reference/        ← personal docs / how-tos
@@ -146,6 +176,8 @@ c:\Users\miroslav.zachar\OneDrive - Direct\Projects\second-brain\
 │   ├── _archive/         ← old vault, read-only
 │   └── _templates/       ← Templater templates
 ├── .claude/
+│   ├── settings.json     ← project-level perms baseline (committed)
+│   ├── settings.local.json  ← machine-local perms (gitignored)
 │   └── skills/
 │       ├── inbox/        ← /inbox skill
 │       ├── spar/         ← /spar skill
@@ -159,9 +191,11 @@ c:\Users\miroslav.zachar\OneDrive - Direct\Projects\second-brain\
 ## Tuning over time
 
 After 2–3 weeks of real use, you'll feel which corners are wrong. Things to revisit:
-- Are inboxes accumulating because you forget to run `/inbox`? Consider a Friday afternoon habit (still no automation — just human discipline).
-- Is the minimal schema (Status, Type, Due) too thin? Add Priority or Hat properties.
-- Is anything still landing in old vault paths? Verify Obsidian shows only the new vault.
-- Is `/draft` missing a destination? Add more options to its SKILL.md.
+- **Inbox thermometer trend** (`grep "Notion Inbox count" vault/daily/*.md`). 7-day rolling avg crossed 15? → add Friday skim ritual. Stayed below? → on-demand-only validated.
+- **Schema still right?** Status/Type/Due/Project plus the rejected Hat. Hat was rejected because hats swap multiple times per day — if reality changes that, revisit. Energy / Priority were deferred from day one.
+- **Due dates churning** (flagged during review session): if you keep moving Due forward, the property is being used as a "deferred until" — consider semantic split or just accept the churn.
+- **Old vault paths**: verify Obsidian shows only the new vault (you should see exactly one vault named after `second-brain`).
+- **`/draft` destinations**: if a destination is missing, add to its `SKILL.md` `destination` list.
+- **Project options drift**: `_unassigned_` placeholder should be deleted once first real project lands. Drop via `notion-update-data-source` DDL or rename in UI.
 
 To make those tweaks: see `HANDOVER.md`.

@@ -4,9 +4,11 @@
 
 ## TL;DR
 
-Personal workflow integrating Notion (task hub) + Obsidian (PKM) + Claude Code (partner). Built 2026-05-13 in a single design session using `/grill-with-docs`. The full design plan is at `~\.claude\plans\goal-of-this-session-glimmering-spark.md`. All decisions and rationale traced there.
+Personal workflow integrating Notion (task hub) + Obsidian (PKM) + Claude Code (partner). Built 2026-05-13 across three sessions: (1) initial design via `/grill-with-docs`, (2) view cleanup + Notion UI configuration, (3) critical review + DB migration + instrumentation.
 
-The system is **live, not done**. Two manual user steps remain (see "Open / pending" below) and several second-order tweaks are deferred.
+The system is **live and instrumented**. Notion DB migrated to plain schema (escaped typed-Tasks-template lock); Project property added; daily template carries an inbox-count thermometer (threshold 15 7-day avg → add Friday skim ritual); SKILL.md hand-offs documented; original design plan archived to `docs/design-2026-05-13.md`. **One UI step remains** (rename old DB in Notion as backup) and one minor housekeeping (rename `_unassigned_` Project option when first real project lands).
+
+Design plan audit trail at both `~\.claude\plans\goal-of-this-session-glimmering-spark.md` (origin) and `docs/design-2026-05-13.md` (in-repo frozen copy). Review session output at `~\.claude\plans\let-s-review-everything-start-declarative-nest.md`.
 
 ## How to operate
 
@@ -14,28 +16,24 @@ For the user-facing daily/weekly use: [`HOW-TO-USE.md`](HOW-TO-USE.md).
 For the user/CC operating contract in this dir: [`CLAUDE.md`](CLAUDE.md).
 For the live glossary including all IDs: [`CONTEXT.md`](CONTEXT.md).
 
-## System state (snapshot 2026-05-13)
+## Current state (live as of 2026-05-13 end-of-day)
 
-### What works
-- Filesystem scaffold under `c:\Users\miroslav.zachar\OneDrive - Direct\Projects\second-brain\` (OneDrive-synced).
-- Local git repo on branch `main`. Multiple commits. Remote `origin` set to `https://github.com/miroslav-create/second-brain.git`.
-- Obsidian vault opened at `vault/`. Templater + Obsidian Git installed and configured. Auto-commit verified working (hourly + on edit).
-- Templater wired to `_templates/` folder. Daily Notes core plugin points at `vault/daily/` with template `_templates/daily`.
-- Old vault (79 files) archived to `vault/_archive/Fondee/`. Read-only by convention. Excluded from graph by user setting.
-- Notion MCP authenticated as `miroslav.zachar@direct.cz`. Tools verified: `notion-get-users`, `notion-fetch`, `notion-search`, `notion-update-data-source`, `notion-query-data-sources`.
-- Notion private Kanban DB: title "Second Brain", ID `35f18e00108d80c3985bcecb788758e2`, data source ID `35f18e00-108d-8068-86a6-000b6c14f3c0`. Active schema (post-shaping):
+### What's live
+- **Filesystem scaffold** under `c:\Users\miroslav.zachar\OneDrive - Direct\Projects\second-brain\` (OneDrive-synced).
+- **Git**: local repo on branch `main`, tracks `origin/main` at `https://github.com/miroslav-create/second-brain.git`. Hourly auto-commit + push via Obsidian Git plugin operational.
+- **Obsidian vault** at `vault/`. Templater + Obsidian Git installed and configured. Daily Notes core plugin → template `_templates/daily.md`. Old Fondee vault (79 files) archived read-only at `vault/_archive/Fondee/`, excluded from graph view.
+- **Notion MCP** authenticated as `miroslav.zachar@direct.cz`. Tools verified: fetch, search, query-data-sources, create-database, update-data-source, create-view, update-view, create-pages, update-page.
+- **Notion private Kanban DB**: title `Second Brain`, ID `4f21d60dc0494d6f84e3248708e87af3`, data source ID `c0a6b990-bdb5-42e3-b112-6c8d424f3819`. Schema (post-migration to plain DB):
   - `Task name` (title)
-  - `Status` (status type) — options: `Inbox | Today | Doing | Waiting | Done` (5, not 6 — Archive deferred; see "Open" below)
+  - `Status` (**select**) — options: `Inbox | Today | Doing | Waiting | Done | Archive`. Fully API-mutable.
   - `Type` (select) — `delivery | code | learn | admin | people | decision`
-  - `Due` (date) — renamed from `Due date`
-  - `Assignee` (person) — vestigial from Notion Tasks template. Hidden in user's default view.
-- Three skills written:
-  - `.claude/skills/inbox/SKILL.md` — `/inbox` (renamed from `/triage` to avoid collision with Matt Pocock issue-tracker skill at parent `Projects\.claude\skills\triage`)
-  - `.claude/skills/spar/SKILL.md` — `/spar`
-  - `.claude/skills/draft/SKILL.md` — `/draft`
-- Smoke test of `/inbox` ran: swept Notion Inbox, encountered 2 demo seed rows from Notion Tasks template, handled correctly (proposed discard, asked user confirmation, applied via `Status=Done` + `[discarded]` title prefix workaround).
-- Auto-memory saved at `~\.claude\projects\c--Users-miroslav-zachar-OneDrive---Direct-Projects-scaffolding\memory\`:
-  - `user_role.md`, `project_second_brain.md`, `feedback_no_rituals.md`, `MEMORY.md`.
+  - `Due` (date)
+  - `Project` (select) — currently 1 placeholder option `_unassigned_`. Slugs to mirror `vault/projects/<slug>.md` filenames as projects are created.
+  - **No Assignee** (escaped typed-Tasks-template lock).
+- **Skills** (`.claude/skills/`): `/inbox`, `/spar`, `/draft`. Each has explicit hand-off lines pointing at the other two skills when appropriate. `/inbox` was renamed from `/triage` to avoid collision with Matt Pocock issue-tracker skill at parent `Projects\.claude\skills\triage`.
+- **Daily template** (`vault/_templates/daily.md`) contains `**Notion Inbox count:** ___` line under `## Inbox`. User fills the count each day; threshold 15 7-day rolling avg → confirms on-demand-discipline failure → add Friday skim ritual.
+- **Settings**: project-level `.claude/settings.json` committed (Notion read+write tools, read-only git). Destructive perms (`git push`, `git commit`) live only in `.claude/settings.local.json` (gitignored).
+- **Auto-memory** at `~\.claude\projects\c--Users-miroslav-zachar-OneDrive---Direct-Projects-second-brain\memory\` (path may show `-scaffolding` from an earlier rename — check both).
 
 ### Open / pending user actions
 1. **Notion UI — rename old DB to `[archived] Second Brain v1`**. URL: https://www.notion.so/35f18e00108d80c3985bcecb788758e2 — keep as backup for 30 days, then delete. (API can't rename typed-Tasks-template DB title directly + leaves safety window for any forgotten data.)
@@ -98,7 +96,7 @@ These were resolved during the `/grill-with-docs` session. If a future change fe
 | Vault sync | OneDrive (existing) + private GitHub via Obsidian Git plugin | Durable + diffable + zero-cost. Rejected paid Obsidian Sync. |
 | Capture entry | Mixed by context (Notion=work, Obsidian=thinking, mobile=typed-only) | Lower friction than single-target. Reconciled via `/inbox`. |
 | Reconcile cadence | On-demand only | User rejected morning/weekly fixed rituals. |
-| Kanban schema | Minimal (Status / Type / Due) | Less = simpler. Deferred Priority, Hat, Project, Energy. Revisit after 2-3 weeks of real use. |
+| Kanban schema | Status / Type / Due / Project (post-migration). Hat explicitly rejected (swap multiple times per day). | Project added during 2026-05-13 migration. Hat reasoning: task-level Hat tag happens after execution, inverts the value; Hat belongs at project-level frontmatter if needed. Energy / Priority still deferred. |
 | Obsidian roles ranked | Daily > Evergreen > Graph > Canvas | Graph view = "mind map", emergent from linking. Canvas reserved for diagrams. |
 | Overlap rule (Notion vs Obsidian) | State machine → Notion. Prose+links → Obsidian. | Sharp rule. Use it when "which tool?" is unclear. |
 | Skill scope for CC | Triage + sparring + drafting, user owns final output | Balanced leverage without trust burden. |
@@ -122,15 +120,16 @@ Update `CLAUDE.md` layout table. Add a Templater template in `_templates/`. Refe
 
 ### Change Notion DB
 - Schema changes via `mcp__claude_ai_Notion__notion-update-data-source` (DDL).
-- View create/update via `notion-create-view` / `notion-update-view` works for grouping, sorting, display props, and filters on select/text/date — but **status-property filters silently fail** (see Known limitations). Status filters added in Notion UI.
-- Status options on typed Status property require Notion UI (API limitation).
+- View create/update via `notion-create-view` / `notion-update-view` works for grouping, sorting, display props, and filters on select/text/date. Current DB uses `select` for Status — filters bind correctly via DSL. (Was a status-property-type bug on the old typed-Tasks-template DB; migrated 2026-05-13 to escape.)
+- Status options on plain `select` Status property are fully mutable via DDL `ADD/DROP/ALTER COLUMN`.
 
-### Migrate to a fresh Notion DB (if typed-collection limits become painful)
-The current DB inherits Notion's Tasks template, which locks `Assignee` and the Status property type. To escape:
-1. Create new DB via `mcp__claude_ai_Notion__notion-create-database` under a regular (non-typed) parent page. Don't use Notion's pre-built Tasks template.
-2. Migrate any active rows via `notion-create-pages` reading from old DB.
-3. Update DB ID + data source ID in `CONTEXT.md` and `CLAUDE.md`.
-4. Update `/inbox` skill if it refers to the old ID anywhere.
+### Re-migrate to another fresh Notion DB (if ever needed again)
+The current plain DB was created 2026-05-13 to escape Notion's Tasks-template typed-collection lock. If you ever need to re-migrate (e.g., to add a different parent page, switch to a different workspace, or escape some future Notion API constraint):
+1. Create new DB via `mcp__claude_ai_Notion__notion-create-database` — pass schema DDL, no parent for workspace-level placement (or specify a parent page ID).
+2. Migrate active rows via `notion-create-pages` reading from old DB (use `notion-query-data-sources` with SQL).
+3. Update DB ID + data source ID in `CONTEXT.md`. No skill IDs to update (skills lookup via CONTEXT.md).
+4. Recreate views via `notion-create-view`. Verify status filters bind by fetching the new DB after creation.
+5. Rename old DB to `[archived] <name>` in Notion UI; delete after 30-day safety window.
 
 ### Add a second Claude Code working dir (e.g., for a vibe-coding project)
 Vibe-coding projects live as **sibling dirs** to `second-brain/` (e.g., `Projects\some-experiment\`), not inside it. Launch CC from inside the project dir. They will not see this dir's skills/CLAUDE.md unless you explicitly link.
@@ -139,21 +138,31 @@ Vibe-coding projects live as **sibling dirs** to `second-brain/` (e.g., `Project
 
 | File | Purpose | Edit when |
 |--|--|--|
-| `CLAUDE.md` | System instructions Claude reads on launch | You change persona, bindings, rules, skill list, or hard rules |
-| `CONTEXT.md` | Live glossary including DB IDs and IDs of everything | Any new entity, role, term, or IDs change |
+| `CLAUDE.md` | System instructions Claude reads on launch (~150 words) | You change persona, hard rules, or pointers to other files |
+| `CONTEXT.md` | Live glossary including all DB IDs, schema, conventions | Any new entity, role, term, or IDs change |
 | `HOW-TO-USE.md` | User-facing operator manual | Daily workflow changes, new skills, new rules |
 | `HANDOVER.md` (this file) | State snapshot for future CC sessions | After major changes, before context risk |
+| `docs/design-*.md` | Frozen historical design plans (do not edit) | Never — these are audit-trail records |
+| `.claude/settings.json` | Project-level perms baseline (committed) | New tool needs perm at project level |
+| `.claude/settings.local.json` | Machine-local perms (gitignored) | New tool needs perm for this machine only |
 | `.claude/skills/<name>/SKILL.md` | Skill behavior | Behavior of that skill changes |
 | `.gitignore` | Untracked paths | New machine-local files appear (settings.local.json, caches) |
 | `vault/_templates/*.md` | Templater note templates | Note shape changes |
 
 ## Where the design conversation lives
 
-The original `/grill-with-docs` session that produced this system is captured in:
-- Plan file: `c:\Users\miroslav.zachar\.claude\plans\goal-of-this-session-glimmering-spark.md`
-- Memory: `c:\Users\miroslav.zachar\.claude\projects\c--Users-miroslav-zachar-OneDrive---Direct-Projects-scaffolding\memory\`
+The original `/grill-with-docs` session that produced this system:
+- **In-repo frozen copy** (canonical): [`docs/design-2026-05-13.md`](docs/design-2026-05-13.md)
+- **Original machine-local**: `c:\Users\miroslav.zachar\.claude\plans\goal-of-this-session-glimmering-spark.md` (may evaporate on `~/.claude` wipe)
 
-If the user wants to re-grill on a part of the design (e.g., "let's reconsider the daily ritual"), the plan file is the audit trail of what was decided and rejected.
+The follow-up review session that produced the migration + thermometer + Project property:
+- `c:\Users\miroslav.zachar\.claude\plans\let-s-review-everything-start-declarative-nest.md` — drill outcomes for weak points #1, #2, #4, #8/9.
+
+Memory (auto-saved):
+- `c:\Users\miroslav.zachar\.claude\projects\c--Users-miroslav-zachar-OneDrive---Direct-Projects-second-brain\memory\` (primary)
+- `c:\Users\miroslav.zachar\.claude\projects\c--Users-miroslav-zachar-OneDrive---Direct-Projects-scaffolding\memory\` (legacy path from earlier rename — may or may not exist)
+
+If the user wants to re-grill on a part of the design (e.g., "let's reconsider Hat rejection"), the appropriate plan file is the audit trail of what was decided and rejected. Surface the relevant one before re-debating.
 
 ## Caveman mode note
 
