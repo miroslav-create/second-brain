@@ -38,18 +38,22 @@ For the live glossary including all IDs: [`CONTEXT.md`](CONTEXT.md).
   - `user_role.md`, `project_second_brain.md`, `feedback_no_rituals.md`, `MEMORY.md`.
 
 ### Open / pending user actions
-_None as of 2026-05-13 (second session)._
+1. **Notion UI — rename old DB to `[archived] Second Brain v1`**. URL: https://www.notion.so/35f18e00108d80c3985bcecb788758e2 — keep as backup for 30 days, then delete. (API can't rename typed-Tasks-template DB title directly + leaves safety window for any forgotten data.)
+2. **Notion UI — rename `_unassigned_` Project option** to whatever first real project slug is when you create the first `vault/projects/<slug>.md`. Or delete it later via DDL when at least one real option exists.
 
-### Live views on private Kanban
+### Live views on private Kanban (NEW DB `4f21d60dc0494d6f84e3248708e87af3`)
 | Name | Type | View ID |
 |--|--|--|
-| Board by Status | board, GROUP BY Status | `35f18e00-108d-804f-af08-000c806fdc2e` |
-| Today | board, GROUP BY Status, filter Status=Today | `35f18e00-108d-8006-b036-000c2d553494` |
-| Inbox | board, GROUP BY Status, filter Status=Inbox | `35f18e00-108d-80dc-87f7-000c01269a68` |
-| By Type | board, GROUP BY Type | `35f18e00-108d-806d-b4fa-000cd42eb86d` |
-| All Tasks | table (Notion default) | `35f18e00-108d-806e-aac4-000c21c0d033` |
+| Board by Status | board, GROUP BY Status | `35f18e00-108d-81fc-8cfa-000cb2d28097` |
+| Today | board, GROUP BY Status, filter Status=Today | `35f18e00-108d-81bc-9f1e-000c3910dce3` |
+| Inbox | board, GROUP BY Status, filter Status=Inbox | `35f18e00-108d-81ec-8657-000c3181a89d` |
+| By Type | board, GROUP BY Type | `35f18e00-108d-817b-9c4a-000c0ed05add` |
+| By Project | board, GROUP BY Project | `35f18e00-108d-8142-a73e-000cdcef4d21` |
 
-Assignee absent from `displayProperties` on all keeper boards — hidden. Status options now `Inbox | Today | Doing | Waiting | Done | Archive`.
+Schema: `Task name`, `Status` (select), `Type` (select), `Due` (date), `Project` (select). No Assignee. Status options: `Inbox | Today | Doing | Waiting | Done | Archive`. Status filters bind correctly via MCP DSL now (was the status-property-type bug).
+
+### Old DB (archived) — `35f18e00108d80c3985bcecb788758e2`
+Pre-migration views on the old DB are deprecated. Old DB will be archived (renamed in UI) then deleted after 30-day safety window.
 
 ### Resolved 2026-05-13 (second session)
 - Initial git push done. Branch `main` tracks `origin/main`. Hourly auto-push via Obsidian Git operational.
@@ -59,6 +63,16 @@ Assignee absent from `displayProperties` on all keeper boards — hidden. Status
 - Detected 4 pre-existing views on DB (created in earlier setup) — first design plan claimed views needed to be created. **Procedure now: always `notion-fetch <db_id>` before creating views.**
 - View type (board ↔ table) not settable via MCP `notion-update-view` — only via Notion UI Layout setting. Codified in Known limitations.
 - Old vault retired: `Dokumenty\Obsidian` removed from Obsidian's vault list.
+
+### Resolved 2026-05-13 (third session — review + migration)
+- Critical review of system design produced as `~/.claude/plans/let-s-review-everything-start-declarative-nest.md`. Four weak points drilled: (1) on-demand discipline → thermometer instrument, (2) two-inbox friction → resolved via design clarification (CC conversation = primary inbox), (4) typed-collection tax → migrate now, (8/9) Project property added, Hat rejected with empirical reasoning.
+- **Notion DB migrated** from typed-Tasks-template (`35f18e00108d80c3985bcecb788758e2`) to plain DB (`4f21d60dc0494d6f84e3248708e87af3`, data source `c0a6b990-bdb5-42e3-b112-6c8d424f3819`). Status is now `select` type, fully API-mutable. 0 rows to migrate.
+- 5 views recreated on new DB. Status filters bind correctly via MCP DSL (was status-property-type bug).
+- Project property added (`select`, with `_unassigned_` placeholder to be renamed at first real project birth).
+- Thermometer line added to `vault/_templates/daily.md`: `**Notion Inbox count:** ___` (threshold 15 7-day avg → trip → add Friday skim ritual).
+- Hand-off lines added to `inbox/spar/draft` SKILL.md (explicit `if user wants X, prefer skill Y` guidance).
+- Project-level `.claude/settings.json` created with safe baseline (Notion read+write tools, read-only git). Destructive perms stay in `settings.local.json`.
+- Original `/grill-with-docs` design plan archived to `docs/design-2026-05-13.md` in repo (was machine-local at `~/.claude/plans/`).
 
 ### Known limitations (durable — codify, don't keep re-discovering)
 - **Notion typed-collection lock**: Tasks-template DBs in Notion mark certain properties as "required". The MCP cannot:

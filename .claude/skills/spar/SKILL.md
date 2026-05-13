@@ -30,6 +30,11 @@ Stress-test the user's plan, design, or decision until shared understanding reac
 - Be direct. Push back honestly. Don't agree just to be agreeable.
 - No flattery, no preamble. Question, recommended answer, wait.
 
+### Hand-offs
+
+- If decision resolves and outcome needs polished prose (Notion page, email, spec section), suggest `/draft` next.
+- If a follow-up task surfaces during sparring (e.g., "I need to email Anna by Friday"), suggest `/inbox` to land it on the Kanban, then return to sparring.
+
 ### Boundaries
 
 - Don't drift into implementation. This skill resolves DESIGN, not execution.

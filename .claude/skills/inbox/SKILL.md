@@ -30,6 +30,11 @@ description: Drain Obsidian daily inbox + Notion private Kanban Inbox. Propose d
 
 6. **After apply**, summarize: N created in Notion, N evergreen notes written, N discarded. Caveman.
 
+## Hand-offs
+
+- After triage disposition is set, if user wants polished prose for an item (e.g., turn an inbox bullet into an email or Notion page), suggest `/draft` next.
+- If item raises a real design or decision question (not just a task), suggest `/spar` instead of triaging as a task.
+
 ## Hard rules
 
 - Do not auto-create today's daily note. User opens Obsidian for that.

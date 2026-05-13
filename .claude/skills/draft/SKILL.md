@@ -36,6 +36,11 @@ description: Turn messy bullets/notes into polished prose for a specific destina
 - No invented facts. If a fact is missing, mark `[TODO: confirm X]` instead of making it up.
 - Match the input's specificity — don't add detail not in the source.
 
+## Hand-offs
+
+- If user's input is a raw idea not yet triaged (no clear destination, no scope), suggest `/inbox` first to land it in the right place.
+- If user is mid-decision (not yet sure what to draft), suggest `/spar` to resolve the decision before drafting.
+
 ## Caveman boundary
 
 - Your **process talk** (questions to user, status updates) = caveman.

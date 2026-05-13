@@ -22,13 +22,13 @@
   - Meetings: `28b18e00108d80c0a6bbc208b2801f3d`
 - **Notion MCP access** — `mcp__claude_ai_Notion__*` tools.
 - **Private Kanban (Notion)** — Miroslav's personal board "Second Brain" in his private space.
-  - Database ID: `35f18e00108d80c3985bcecb788758e2`
-  - Data source ID: `35f18e00-108d-8068-86a6-000b6c14f3c0`
-  - URL: https://www.notion.so/pojistovnadirect/35f18e00108d80c3985bcecb788758e2
-  - Active schema: `Task name` (title), `Status` (status), `Type` (select: delivery|code|learn|admin|people|decision), `Due` (date), `Assignee` (person — vestigial, hidden in UI).
-  - Status options (live): `Inbox | Today | Doing | Waiting | Done | Archive`. Mutation of options API-rejected (typed Status property) — UI-only.
-  - Caveat: DB is "typed" (Notion Tasks template). API can't drop `Assignee` or change `Status` type. User hides `Assignee` column.
-  - **MCP limitation**: Notion MCP does not expose page-archive or page-trash actions. To remove rows from sight without UI: set `Status=Done` and prefix title with `[discarded]`. True trash = user action in Notion UI.
+  - Database ID: `4f21d60dc0494d6f84e3248708e87af3`
+  - Data source ID: `c0a6b990-bdb5-42e3-b112-6c8d424f3819`
+  - URL: https://www.notion.so/4f21d60dc0494d6f84e3248708e87af3
+  - Schema: `Task name` (title), `Status` (select), `Type` (select: delivery|code|learn|admin|people|decision), `Due` (date), `Project` (select: mirrors `vault/projects/<slug>.md` filenames; starts with `_unassigned_` placeholder).
+  - Status options: `Inbox | Today | Doing | Waiting | Done | Archive`. Fully API-mutable via DDL (plain DB, not Tasks template). Status filter on views binds correctly via MCP DSL.
+  - Migrated 2026-05-13 from old typed-Tasks-template DB (escaped typed-collection lock). Old DB ID: `35f18e00108d80c3985bcecb788758e2` (archived).
+  - **MCP limitation (durable)**: Notion MCP does not expose page-archive or page-trash actions. To remove rows from sight without UI: set `Status=Done` (or `Archive`) and prefix title with `[discarded]`. True trash = user action in Notion UI.
 - **Vault (Obsidian)** — markdown PKM at `Projects\second-brain\vault\`. Folders: daily, people, projects, evergreen, meetings, reference, canvas, _archive, _templates.
 - **Old vault** — was at `Dokumenty\Obsidian`. Copied (read-only) to `vault\_archive\` on 2026-05-13. Excluded from graph view.
 - **Claude Code** — invoked from `Projects\second-brain\` working dir.
