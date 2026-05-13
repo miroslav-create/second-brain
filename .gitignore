@@ -6,3 +6,9 @@ vault/.trash/
 Thumbs.db
 
 vault/.obsidian/plugins/*/data.json
+
+# Claude Code per-machine settings (permissions etc.)
+.claude/settings.local.json
+
+# Scratch
+inbox-cache/
