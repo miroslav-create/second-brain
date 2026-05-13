@@ -1,0 +1,1 @@
+Idea for an AI agent for CC

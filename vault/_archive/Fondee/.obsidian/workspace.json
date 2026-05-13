@@ -1,0 +1,223 @@
+{
+  "main": {
+    "id": "81755c57d014e8a8",
+    "type": "split",
+    "children": [
+      {
+        "id": "051d73525a612141",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "36ebc21f9eb84140",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8bc71901bae74de2",
+    "type": "split",
+    "children": [
+      {
+        "id": "e2d88e0b2fdae560",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2775d718e15803dd",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "f036dec53eb6a0c5",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "15ea30baa6f7a2a3",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8469c92e061e4f54",
+    "type": "split",
+    "children": [
+      {
+        "id": "d21f920195d9308e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0d570137a82397d0",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Web Scrapping app/Concepts/Overlap.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Overlap"
+            }
+          },
+          {
+            "id": "7060e57da7383580",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Web Scrapping app/Concepts/Overlap.md",
+                "linksCollapsed": true,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Overlap"
+            }
+          },
+          {
+            "id": "feea6e2e49bb2e16",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "51366574a4b359c3",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "1a03498e94238d56",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Web Scrapping app/Concepts/Overlap.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Overlap"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "36ebc21f9eb84140",
+  "lastOpenFiles": [
+    "Web Scrapping app/Untitled.base",
+    "Web Scrapping app/Concepts/Overlap.md",
+    "CONTEXT.md",
+    "Web Scrapping app/Providers/Provider - Generali.md",
+    "Web Scrapping app/Providers/Provider - Conseq.md",
+    "Web Scrapping app/Providers/Provider - JT IS.md",
+    "Web Scrapping app/Providers/Provider - DEGIRO.md",
+    "Web Scrapping app/Providers/Provider - Revolut.md",
+    "Web Scrapping app/Providers/Provider - eToro.md",
+    "Web Scrapping app/Providers/Provider - XTB.md",
+    "Web Scrapping app/Providers/Provider - Trading212.md",
+    "Web Scrapping app/Providers/Provider - UniCredit.md",
+    "Web Scrapping app/Providers/Provider - Moneta.md",
+    "Web Scrapping app/Providers/Provider - mBank.md",
+    "Web Scrapping app/Providers/Provider - Max banka.md",
+    "Web Scrapping app/Providers/Provider - Trinity.md",
+    "Web Scrapping app/Providers/Provider - Raiffeisen.md",
+    "Web Scrapping app/Mind map.md",
+    "Web Scrapping app/Providers/Provider - Creditas.md",
+    "Web Scrapping app/Providers/Provider - Air Bank.md",
+    "Web Scrapping app/Providers/Provider - Erste ČS.md",
+    "Web Scrapping app/Providers/Provider - ČSOB.md",
+    "Web Scrapping app/Providers/Provider - KB.md",
+    "Web Scrapping app/Providers/Provider - Indigo.md",
+    "Web Scrapping app/Providers/Provider - Portu.md",
+    "Web Scrapping app/Providers/Provider - Fondee.md",
+    "Web Scrapping app/Providers",
+    "Web Scrapping app/Modules",
+    "Web Scrapping app/Concepts",
+    "Web Scrapping app/ADRs",
+    "Workshop 110526",
+    "AI/Visual Studio Code",
+    "Obsidian",
+    "AI",
+    "AI/Claude/Skills",
+    "AI/Claude",
+    "Untitled.canvas"
+  ]
+}
