@@ -14,7 +14,7 @@ description: Drain Obsidian daily inbox + Notion private Kanban Inbox. Propose d
 3. **For each item across both sources**, propose ONE disposition:
    - **→ Notion task**: stays as Kanban row, set `Type` (delivery/code/learn/admin/people/decision), `Status` → `Today` or keep `Inbox`, set `Due` if implied. If item already in Notion, just enrich. If from Obsidian, create new Notion row + leave a `[x]` marker next to original bullet.
    - **→ Evergreen note**: extract into `vault/evergreen/<slug>.md` using `_templates/evergreen.md` shape. Propose `[[wikilinks]]` to existing notes (search vault first to surface candidates).
-   - **→ Discard**: irrelevant or already obsolete. Leave bullet but strike through in Obsidian / archive Notion row.
+   - **→ Discard**: irrelevant or already obsolete. Obsidian: strike through bullet in place. Notion: set `Status=Done` and prepend `[discarded] ` to title (MCP does not expose archive/trash). User can true-trash in Notion UI later.
 
 4. **Present batch as a table** to user before acting:
 

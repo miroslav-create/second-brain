@@ -23,6 +23,7 @@
   - Active schema: `Task name` (title), `Status` (status), `Type` (select: delivery|code|learn|admin|people|decision), `Due` (date), `Assignee` (person — vestigial, hidden in UI).
   - Status options (set in Notion UI by user): `Inbox | Today | Doing | Waiting | Done | Archive`.
   - Caveat: DB is "typed" (Notion Tasks template). API can't drop `Assignee` or change `Status` type. User hides `Assignee` column.
+  - **MCP limitation**: Notion MCP does not expose page-archive or page-trash actions. To remove rows from sight without UI: set `Status=Done` and prefix title with `[discarded]`. True trash = user action in Notion UI.
 - **Vault (Obsidian)** — markdown PKM at `Projects\second-brain\vault\`. Folders: daily, people, projects, evergreen, meetings, reference, canvas, _archive, _templates.
 - **Old vault** — was at `Dokumenty\Obsidian`. Copied (read-only) to `vault\_archive\` on 2026-05-13. Excluded from graph view.
 - **Claude Code** — invoked from `Projects\second-brain\` working dir.
