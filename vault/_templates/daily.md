@@ -12,19 +12,8 @@ tags: [daily]
 
 # <% tp.date.now("YYYY-MM-DD, dddd") %>
 
-## Inbox
-
-**Notion Inbox count:** ___ <!-- thermometer: glance at Notion DB, write number. Threshold 15 (7-day avg) = add Friday skim ritual. -->
-
-<!-- Drop any thought, task, idea, link here. `/inbox` reads this section. -->
-- 
-
-## Doing today
-<!-- Mirror Notion 'Today' column. Quick glance. -->
-- 
-
 ## Notes / log
-<!-- Reflections, decisions, observations. Long-form OK. -->
+<!-- Free-form ephemera. Decisions, observations, scratchpad. Long-running prose belongs in initiative / domain / system notes — those persist; daily notes don't. -->
 
 
 ## Links touched
@@ -32,4 +21,4 @@ tags: [daily]
 
 
 ## Tomorrow
-<!-- One-line nudge for future-you. -->
+<!-- One-line nudge for future-you. Optional. -->

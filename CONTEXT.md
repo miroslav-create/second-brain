@@ -29,20 +29,34 @@
   - Status options: `Inbox | Today | Doing | Waiting | Done | Archive`. Fully API-mutable via DDL (plain DB, not Tasks template). Status filter on views binds correctly via MCP DSL.
   - Migrated 2026-05-13 from old typed-Tasks-template DB (escaped typed-collection lock). Old DB ID: `35f18e00108d80c3985bcecb788758e2` (archived).
   - **MCP limitation (durable)**: Notion MCP does not expose page-archive or page-trash actions. To remove rows from sight without UI: set `Status=Done` (or `Archive`) and prefix title with `[discarded]`. True trash = user action in Notion UI.
-- **Vault (Obsidian)** — markdown PKM at `Projects\second-brain\vault\`. Folders: daily, people, projects, evergreen, meetings, reference, canvas, _archive, _templates.
+- **Vault (Obsidian)** — markdown PKM at `Projects\second-brain\vault\`. Folders: **initiatives, domains, systems** (primary node types), daily, people, projects (legacy), evergreen, meetings, reference, canvas, _archive, _templates.
 - **Old vault** — was at `Dokumenty\Obsidian`. Copied (read-only) to `vault\_archive\` on 2026-05-13. Excluded from graph view.
 - **Claude Code** — invoked from `Projects\second-brain\` working dir.
 
 ## Workflow primitives
 
-- **Task** — atomic unit on private Kanban. Min 15 min. Larger items broken into atoms in `vault/projects/` first; only atoms land on board.
-- **Inbox** — two physical locations: Obsidian daily note `## Inbox` section, and Notion private Kanban `Inbox` column. Both drained by `/inbox`.
-- **Hat** — one of Miroslav's roles (BA, PO, PM, Delivery, AI-Amb, IT-Analyst). Not currently a Kanban property; surfaces in project notes.
-- **Triage** — on-demand pass through both inboxes producing per-item decisions. Run via `/inbox`. No fixed schedule.
-- **Evergreen note** — atomic, self-contained concept note in `vault/evergreen/`. Written in user's words. Linked to other evergreens via `[[wikilinks]]`.
-- **Daily note** — `vault/daily/YYYY-MM-DD.md`. Capture entry point + day's reasoning log + tomorrow nudge.
-- **Project note** — `vault/projects/<slug>.md`. One per active piece of work. Holds why/outcome/stakeholders/open-questions/decisions/links.
-- **Meeting note (Obsidian)** — `vault/meetings/meeting-YYYY-MM-DD-topic.md`. Long reasoning; bullets/actions go to Notion Meetings DB instead.
+### Vault node types (PRIMARY — three cap)
+
+- **Initiative note** — `vault/initiatives/<slug>.md`. Named multi-week effort. Frontmatter: `domain`, `systems`, `stakeholders`, `hat`, `status`, `started`. Sections: Why / Scope / Open questions / Decisions / Change log / Links. Capture flow appends date-stamped entries to Decisions + Change log.
+- **Domain note** — `vault/domains/<slug>.md`. Standing business area (payments, data-platform, ops, people, etc.). Cross-cutting node. Frontmatter: `owner`. Sections: Mission / Active initiatives / Systems in scope / Decisions / Notes. Backlinks panel reveals initiatives + systems living in this domain.
+- **System note** — `vault/systems/<slug>.md`. App, API, vendor, integration. Frontmatter: `owner`, `contract`, `last_touched`, `domain`. Sections: What / Contract / Owners / Gotchas / Consumers / Change log. Backlinks from initiatives = "1 change → full scope" view.
+
+### Other vault entities
+
+- **Daily note** — `vault/daily/YYYY-MM-DD.md`. Free-form ephemera. No imposed structure. Thermometer + structured inbox removed 2026-05-14.
+- **Evergreen note** — `vault/evergreen/<slug>.md`. Atomic concept reusable across initiatives. Bottom-up emergent only — never seed top-down.
+- **Meeting note** — `vault/meetings/meeting-YYYY-MM-DD-topic.md`. Long reasoning; bullets/actions go to Notion Meetings DB.
+- **Project note** (legacy) — `vault/projects/<slug>.md`. Pre-redesign convention. New work goes to `vault/initiatives/<slug>.md` instead. Kept for backward compat; migrate when convenient.
+
+### Task / capture primitives
+
+- **Task** — atomic unit on private Kanban. Min 15 min. Larger items broken into initiative-note prose first; only atoms land on Kanban.
+- **Notion Inbox** — `Status=Inbox` column on private Kanban. Drained on-demand by `/inbox`.
+- **Capture candidate** — in-session record produced by `/capture` skill when `[change-verb] + [node-reference]` detected in user utterance. Stored with verbatim trigger quote. Confirmed at handover.
+- **Change-verb** — see `.claude/skills/capture/SKILL.md` for current list. Trigger for capture detection.
+- **Handover** — natural-language session-end signal ("prepare handover" / "wrap up" / "end of session" / explicit `/capture`). Fires batched capture review.
+- **New-node candidate** — proper-noun-looking entity mentioned alongside change-verb, no slug match in vault. Classified at handover (i/d/s/skip).
+- **Hat** — one of user's roles (BA, PO, PM, Delivery, AI-Amb, IT-Analyst). Surfaces in initiative-note frontmatter (`hat:`). Not a Kanban property.
 
 ## Type values (Notion `Type` property)
 
@@ -55,7 +69,9 @@
 
 ## Conventions
 
-- **Overlap rule**: state machine → Notion. Prose + links → Obsidian.
-- **Bridge**: when a Kanban task has an Obsidian breakdown, paste the note's URL/path in the task description body. No formal relation property.
+- **Overlap rule**: task state machine → Notion (task source). Living prose + node graph → Obsidian (primary doc surface). Daily ephemera → daily note.
+- **Bridge**: when a Kanban task has an Obsidian initiative-note, paste the note's URL/path in the task description body. No formal relation property.
 - **Meeting split**: bullets → Notion Meetings DB; long reasoning → Obsidian linked via `[[meeting-YYYY-MM-DD-topic]]`.
-- **No rituals**: triage and reviews are on-demand, never scheduled.
+- **No rituals**: capture, sweeps, sparring all on-demand. Capture fires on user handover-intent only.
+- **Three-node cap**: vault node types capped at initiative/domain/system. Push back hard before adding a fourth.
+- **Notion `Project` slug**: currently mirrors `vault/projects/<slug>.md` (legacy). Migrate to `vault/initiatives/<slug>.md` convention at first real initiative birth.
