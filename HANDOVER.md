@@ -39,6 +39,20 @@ For the live glossary including all IDs: [`CONTEXT.md`](CONTEXT.md).
 1. **Notion UI — rename old DB to `[archived] Second Brain v1`**. URL: https://www.notion.so/35f18e00108d80c3985bcecb788758e2 — keep as backup for 30 days, then delete. (API can't rename typed-Tasks-template DB title directly + leaves safety window for any forgotten data.)
 2. **Notion UI — rename `_unassigned_` Project option** to whatever first real project slug is when you create the first `vault/projects/<slug>.md`. Or delete it later via DDL when at least one real option exists.
 
+### Open question for next session — morning flow too heavy
+User asked for a model of morning + workday flow on 2026-05-13 evening. Three iterations were rejected as too many pre-work steps. The current state of the discussion:
+
+- **User's complaint**: before starting actual work, need 3+ steps (open CC, open Obsidian, write thermometer, do check-in). Too heavy. Wants: sit down → start working. Period.
+- **Constraint the design must satisfy**: thermometer (or some falsifiability signal) survives per the [review session resolution](C:\Users\miroslav.zachar\.claude\plans\let-s-review-everything-start-declarative-nest.md) — threshold 15 7-day avg triggers Friday-skim ritual. Drop only if user explicitly accepts losing the experiment.
+- **Three cuts proposed (not yet picked)**:
+  1. **Zero-ceremony auto** — CC runs morning check on first message of day, writes to `vault/thermometer.md` (new file, NOT daily note), prepends status to response. Thermometer moves out of daily note → single CC-managed running log. Requires a rule in CLAUDE.md.
+  2. **Drop thermometer entirely** — bet on raw discipline + visual Notion Inbox count as canary. Cheapest. Loses falsifiability.
+  3. **Auto-thermometer in daily note** — CC writes thermometer line into daily note when present; otherwise prompts user to open Obsidian. 1-2 steps depending on day.
+- **Files that would change if option (1) picked**: `vault/_templates/daily.md` (remove thermometer line), `vault/thermometer.md` (new file, CC seeds), `CLAUDE.md` (add `on first response of session, check thermometer last entry; if not today, run morning routine` rule), `HOW-TO-USE.md` (update Daily flow + thermometer section).
+- **Files that would change if option (2) picked**: `vault/_templates/daily.md` (remove thermometer line), `HOW-TO-USE.md` (drop thermometer section), `HANDOVER.md` + review plan file (note thermometer dropped, weak point #1 becomes unobserved).
+- **Files that would change if option (3) picked**: `CLAUDE.md` (auto-write rule, fallback to prompt). Smallest change.
+- **What to do next session**: surface this open question first, ask user to pick the cut, then implement.
+
 ### Live views on private Kanban (NEW DB `4f21d60dc0494d6f84e3248708e87af3`)
 | Name | Type | View ID |
 |--|--|--|
