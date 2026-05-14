@@ -32,6 +32,7 @@
 - **Vault (Obsidian)** — markdown PKM at `Projects\second-brain\vault\`. Folders: **initiatives, domains, systems** (primary node types), daily, people, projects (legacy), evergreen, meetings, reference, canvas, _archive, _templates.
 - **Old vault** — was at `Dokumenty\Obsidian`. Copied (read-only) to `vault\_archive\` on 2026-05-13. Excluded from graph view.
 - **Claude Code** — invoked from `Projects\second-brain\` working dir.
+- **Fadmin** — Fondee interný back-office SW. CC tým rieši klientske tickety (vrátane referral state, audit log, manual reward credit) priamo cez Fadmin. BE pri novej feature musí exposnúť state/history v API/DB pre Fadmin integráciu.
 
 ## Workflow primitives
 
