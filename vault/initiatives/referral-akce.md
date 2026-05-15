@@ -45,6 +45,45 @@ Redesign referral programu Fondee. Nový režim: nepretržitý beh bez limitu po
 - **Q10** — Owner + deadline pre FAQ obsah a PDF podmienky. Doriešiť v sprint plan meeting (BA + PO + Legal).
 - **Q8 edge case** — Reverz mechanizmus `display_name_revealed = false` pri KYC-fail-after-completion. Doriešiť počas implementácie.
 
+## Pre-meeting Qs
+
+### Pre Martina (CTO)
+
+- **Arch boundary**: `referral-batch-service` standalone alebo modul existujúceho monolitu? Trade-off: deployment isolation vs prevádzková réžia.
+- **Event source**: 5 trigger eventov (assign/register/contract/deposit/reward) — existujúci event bus alebo polling DB state? Ak bus, retry semantics + dead letter strategy?
+- **Idempotency design (Q5)**: DB unique constraint `(referral_id, batch_run_id)` postačí, alebo transactional outbox pattern pre exactly-once payout?
+- **Storno integrácia**: full account storno → re-validate. Webhook z KYC/účet systému, alebo nightly reconciliation? SLA pre stale state?
+- **Privacy column**: `referral.display_name_revealed` — column na referral table OK? Migration plan, default false, backfill.
+- **Batch ops**: cron monitoring, alerting threshold, manual re-run mechanism ak job failne v stredu o 2:00.
+- **Fadmin API contract**: REST endpoints na state history alebo direct DB read-only role pre Fadmin? Auth model.
+- **Config strategy**: 500 CZK / 20 EUR / 100 PLN + min vklad 1000 Kč — runtime config (DB/feature flag) alebo deploy-time? Kto má právo meniť.
+- **Rate limit / abuse**: validation endpoint open pre anonym? Bot guard ak nie?
+
+### Pre Hanku (Data/BA lead)
+
+- **Analytics scope v1**: len business eventy (assign/eligible/rewarded) alebo extended funnel (share kliky, share kanály)? Decision = E1/E2 instrumentation effort.
+- **Baseline**: aktuálny referral funnel — máme data? Treba pre v2 conversion benchmarks.
+- **Pilot success criteria**: 3-mesačný pilot — aké KPI definujú "ďalej" vs "stop"? Fraud pattern threshold (% suspicious / dispute rate)?
+- **Reporting ownership**: dashboards real-time alebo daily batch? Kto owns post-launch? CC tím alebo growth tím?
+- **Pseudonymisation**: v analytics layer `referral_id` raw alebo hash? GDPR audit pohľad.
+- **Test dataset**: kto pripraví cross-currency edge cases, refund races, KYC-fail-after-complete scenarios? Bez toho QA blind.
+- **AC template**: máme štandard pre user story acceptance criteria pre tieto epics? Konzistencia s ostatnými iniciatívami.
+- **Handover BAU**: kto vlastní Doporučení po launchi? Robert manuálny batch — backup person ak PN/dovolenka?
+- **Legal coordination (Q10)**: kto drives FAQ + PDF obsah deadline? BA, PO alebo Legal samé?
+
+## Epic breakdown (návrh)
+
+1. **E1 — Doporučení page (web, klient zóna)**: list view, share UI, infinite scroll, CZ texty. Závisí na E3+E4.
+2. **E2 — Doporučení screen (mobile app)**: parita s E1. Native share.
+3. **E3 — BE state machine + event ingest**: `IN_PROGRESS → ELIGIBLE → REWARDED`. 5 trigger eventov. State history audit log. Core blocker.
+4. **E4 — Ref-code validation service**: strict reject FE + BE. Privacy: blocked = neexistujúci.
+5. **E5 — Manuálny batch reward process**: Robert štvrtok job. Idempotency. Cross-currency payout.
+6. **E6 — Fadmin CC observability integration**: state history API + reason flags. [[fadmin]] side.
+7. **E7 — GDPR display-name reveal mechanism**: `display_name_revealed` bool. Reveal len ELIGIBLE/REWARDED. Reverz pri KYC-fail.
+8. **E8 — Legal/Content delivery**: FAQ obsah, PDF podmienky, T&C copy. Non-tech blocker risk.
+
+Alt: ak JIRA epic granularity tlačí menej epics → E1+E2 merge do "FE delivery" = 7 total.
+
 ## Decisions
 
 - **2026-05-15** — Currency cross-country: odmena sa pripisuje v mene účtu príjemcu (CZK/EUR/PLN), nie podľa krajiny doporučujúceho. Žiadna FX konverzia.
@@ -60,6 +99,7 @@ Redesign referral programu Fondee. Nový režim: nepretržitý beh bez limitu po
 ## Change log
 
 - **2026-05-15** — BA sparring nad špec dokončený (13 otázok: 9 resolved, 3 blocker open, 1 backlog v2). Komentáre zanesené do špec dokumentu (anchors `[CC-spar Q1..Q13]`). Status: in-review → ready-for-dev po doriešení Q4/Q5/Q10.
+- **2026-05-15** — Pridané pre-meeting Qs (Martin CTO + Hanka Data/BA) + epic breakdown návrh (8 epics, alt 7).
 
 ## Links
 
