@@ -100,6 +100,8 @@ Alt: ak JIRA epic granularity tlačí menej epics → E1+E2 merge do "FE deliver
 
 - **2026-05-15** — BA sparring nad špec dokončený (13 otázok: 9 resolved, 3 blocker open, 1 backlog v2). Komentáre zanesené do špec dokumentu (anchors `[CC-spar Q1..Q13]`). Status: in-review → ready-for-dev po doriešení Q4/Q5/Q10.
 - **2026-05-15** — Pridané pre-meeting Qs (Martin CTO + Hanka Data/BA) + epic breakdown návrh (8 epics, alt 7).
+- **2026-05-15** — 8 epics + 48 tasks vytvorené v Notion `fromJIRA` DB. Všetky Status=Backlog. Tags: `Epic` + doménový tag (FrontEnd/Back End/Mobilní Appka/FADMIN). Naming: `[REF-E{n}]` epics, `[REF-E{n}.{m}]` tasks. Parent task linknuté.
+- **2026-05-15** — Notion epics+tasks preložené do CZ (Task name + Description). Technické termíny ostali EN.
 
 ## Links
 
