@@ -23,6 +23,29 @@ For the user/CC operating contract: [`CLAUDE.md`](CLAUDE.md).
 For the live glossary: [`CONTEXT.md`](CONTEXT.md).
 For capture rules (verb list, trigger phrases, format): [`.claude/skills/capture/SKILL.md`](.claude/skills/capture/SKILL.md).
 
+## Current state (live as of 2026-05-15)
+
+### Session 2026-05-15 — Referral akce BA review (Fondee)
+
+Prvá reálna initiative landla v vault. Detail:
+
+- **Špec source:** `C:\Users\miroslav.zachar\OneDrive - Direct\Projects\Referal Akce\Referral specifikace.md` (mimo second-brain repo, OneDrive sibling).
+- **Workflow použitý:** `/spar` (13 otázok, 9 resolved, 3 blocker open, 1 backlog v2) → `/draft` (notion-page dev kickoff, output v chat, používateľ paste-uje do Notion) → vault seed (3 nody).
+- **Vault seed:**
+  - [[referral-akce]] — initiative, status `in-review` (čaká na Q4/Q5/Q10 doriešenie pred dev-ready)
+  - [[growth]] — domain stub, 2 cross-cutting patterns (cross-country currency rule, GDPR third-party-PII rule)
+  - [[fadmin]] — system stub, owner `TODO: confirm`
+- **Word komentáre map** prezentovaná v chat (13 anchorov → texts) — používateľ zanáša ručne do Word verzie špec. Žiadny CC-write do externého súboru.
+- **CONTEXT.md update:** pridaný `Fadmin` (Tools sekcia).
+- **3 blocker otázky pre dev kickoff:** Q4 (read-only kód v kroku N pri manual fill), Q5 (batch idempotency mechanism), Q10 (FAQ + PDF owner). Tracked v [[referral-akce]] `## Open questions`.
+
+**Pattern learned:**
+- `/spar` skill zvládol 13 otázok v jednom flow bez ceremony. Caveman process talk + normal prose pre draft output funguje.
+- Vault seed na konci sessiónu (po `/draft`) lepší ako počas — user vidí celý decision set predtým ako node vznikne, nemá redundant content.
+- Three-node cap fungoval: aj keď špec dotýka 4+ systémov (KZ web, Fondee app, BE batch, Fadmin), v vault pribudol len 1 system (Fadmin — má vlastný owner mimo BE). Ostatné = change-log entries pri reálnej dev práci.
+
+---
+
 ## Current state (live as of 2026-05-14)
 
 ### What's live
