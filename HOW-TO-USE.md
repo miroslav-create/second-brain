@@ -103,10 +103,14 @@ Stress-tests a decision or design. One question at a time, with recommended answ
 #### `/draft` — bullets → prose
 Polished draft for a destination — Notion page, Slack, email, spec section. When to run: notes ready, staring at blank page.
 
+#### `/notion-ticket` — guided ticket creation
+Creates one Notion ticket with CZ-first language + initiative prefix enforcement (e.g. `[REF-E5.8]`). Asks for missing context, drafts the title + description per language rules, shows confirm preview, writes after `y`. Explicit invocation only (no auto-fire). When to run: need a new ticket and want it to follow the conventions without manually typing the prefix + tags + status every time. Bulk creation (5+) = direct Notion MCP instead. Full rules: `.claude/skills/notion-ticket/SKILL.md`.
+
 ### Hand-offs
 - `/capture` review surfaces a decision needing more thought → `/spar`.
 - `/capture` captured item needs polished prose → `/draft`.
 - `/spar` resolves → outcome may need `/draft`; follow-up task → `/inbox` or just say "started X" so capture picks it up.
+- New ticket needed mid-session → `/notion-ticket <intent>`. After write, optionally log to initiative `## Change log` via capture flow.
 
 ---
 
@@ -202,10 +206,11 @@ c:\Users\miroslav.zachar\OneDrive - Direct\Projects\second-brain\
 │   ├── settings.json     ← project-level perms baseline
 │   ├── settings.local.json  ← machine-local perms (gitignored)
 │   └── skills/
-│       ├── capture/      ← /capture skill (PRIMARY, auto-active)
-│       ├── inbox/        ← /inbox skill (Notion Inbox drain)
-│       ├── spar/         ← /spar skill
-│       └── draft/        ← /draft skill
+│       ├── capture/        ← /capture skill (PRIMARY, auto-active)
+│       ├── inbox/          ← /inbox skill (Notion Inbox drain)
+│       ├── spar/           ← /spar skill
+│       ├── draft/          ← /draft skill
+│       └── notion-ticket/  ← /notion-ticket skill (guided Notion ticket creation)
 └── inbox-cache/          ← scratch space (gitignored)
 ```
 

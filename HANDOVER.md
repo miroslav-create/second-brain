@@ -60,7 +60,7 @@ Prvá reálna initiative landla v vault. Detail:
 - **Capture skill** at `.claude/skills/capture/SKILL.md`. Auto-active every user turn. Silent during session. Fires batched review on handover intent or explicit `/capture`. Detection: `[change-verb] + [node-reference]`. New-node candidates flagged for classification.
 - **Notion MCP** authenticated as `miroslav.zachar@direct.cz`.
 - **Notion private Kanban DB**: title `Second Brain`, ID `4f21d60dc0494d6f84e3248708e87af3`, data source `c0a6b990-bdb5-42e3-b112-6c8d424f3819`. Plain DB schema (no Tasks template): `Task name`, `Status` (select, options `Inbox|Today|Doing|Waiting|Done|Archive`), `Type` (select), `Due` (date), `Project` (select, options mirror `vault/initiatives/<slug>.md` filenames).
-- **Skills** (`.claude/skills/`): `capture` (PRIMARY, auto-active), `inbox` (Notion-Inbox-only sweep — shrunk 2026-05-14 from earlier dual-inbox drain), `spar`, `draft`.
+- **Skills** (`.claude/skills/`): `capture` (PRIMARY, auto-active), `inbox` (Notion-Inbox-only sweep — shrunk 2026-05-14 from earlier dual-inbox drain), `spar`, `draft`, `notion-ticket` (added 2026-05-15 — guided Notion ticket creation with CZ-first language + initiative prefix enforcement, explicit `/notion-ticket` only).
 - **Daily template** (`vault/_templates/daily.md`) stripped of thermometer line. Now free-form ephemera.
 - **Settings**: project-level `.claude/settings.json` committed (Notion read+write tools, read-only git). Destructive perms in `.claude/settings.local.json` (gitignored).
 - **Auto-memory** at `~\.claude\projects\c--Users-miroslav-zachar-OneDrive---Direct-Projects-second-brain\memory\`.
