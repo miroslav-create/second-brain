@@ -95,6 +95,8 @@ Alt: ak JIRA epic granularity tlačí menej epics → E1+E2 merge do "FE deliver
 - **2026-05-15** — TTL pre IN_PROGRESS: žiadne. Marketingový tlak na dokončenie registrácie. Akceptované riziko: counter rastie monotónne.
 - **2026-05-15** — Fraud guard: KYC + 1000 Kč min vklad postačujú v1. Pilot 3 mesiace, monitor patterns.
 - **2026-05-15** — CC observability: cez [[fadmin]]. BE expose state history + reason flags v API/DB pre Fadmin integráciu.
+- **2026-05-15** — Override CLAUDE.md hard rule *"Never duplicate team-board tickets. Link only."* pre tento initiative. Parent Project page (`[REF] Referral akce — projekt`) zapísaná do team `fromJIRA` DB napriek tomu, že nemá JIRA `Issue key`. Reasoning: 8 epikov už existuje v team DB s JIRA keys; native `Parent task` self-relation vyžaduje same-DB. Caveat: Ria's JIRA sync má neistú reakciu — orphan/purge/ignore unknown. Watch next sync run.
+- **2026-05-15** — DDL: `Project` pridaný do `Tags` multi-select v data source `35e18e00-108d-816a-88e3-000baf8ced0a` (`ALTER COLUMN "Tags" SET MULTI_SELECT(...)`). Schema-drift voči JIRA sync source — JIRA túto hodnotu nepozná. Issue Type field nechané ako text=`Project` (JIRA-native semantic: Project > Epic > Story hierarchy).
 
 ## Change log
 
@@ -102,6 +104,7 @@ Alt: ak JIRA epic granularity tlačí menej epics → E1+E2 merge do "FE deliver
 - **2026-05-15** — Pridané pre-meeting Qs (Martin CTO + Hanka Data/BA) + epic breakdown návrh (8 epics, alt 7).
 - **2026-05-15** — 8 epics + 48 tasks vytvorené v Notion `fromJIRA` DB. Všetky Status=Backlog. Tags: `Epic` + doménový tag (FrontEnd/Back End/Mobilní Appka/FADMIN). Naming: `[REF-E{n}]` epics, `[REF-E{n}.{m}]` tasks. Parent task linknuté.
 - **2026-05-15** — Notion epics+tasks preložené do CZ (Task name + Description). Technické termíny ostali EN.
+- **2026-05-15** — Vytvorená parent Project page v Notion `fromJIRA` DB: `[REF] Referral akce — projekt` (ID 182, URL https://www.notion.so/36118e00108d8123af5ed1cc7261ef18). Issue Type=Project, Status=Backlog. Body = Cíl + Figma + 8 epic links + 3 blockery + full špec paste. 8 epikov (E1–E8) → `Parent task` = parent (dual relation `Sub-task` server-side overené 8/8). DDL: Tag `Project` pridaný do `Tags` multi-select. Caveat: row nemá JIRA `Issue key` → watch budúci Ria sync.
 
 ## Links
 

@@ -25,6 +25,26 @@ For capture rules (verb list, trigger phrases, format): [`.claude/skills/capture
 
 ## Current state (live as of 2026-05-15)
 
+### Session 2026-05-15 (cont.) — Notion parent Project page + epic linking
+
+Continuation poobedie. Parent Project page pre referral-akce vytvorená v team `fromJIRA` DB.
+
+- **Parent:** `[REF] Referral akce — projekt` (ID 182, [URL](https://www.notion.so/36118e00108d8123af5ed1cc7261ef18)). Issue Type=Project, Status=Backlog. Body = full špec markdown paste z `Referral specifikace.md` + Figma link + 8 epic bullet links + 3 blockery (Q4/Q5/Q10).
+- **DDL:** ADD `Project` option do `Tags` multi-select v data source `35e18e00-108d-816a-88e3-000baf8ced0a`.
+- **Linkovanie:** 8 epikov (E1–E8) → `Parent task` relácia = parent. `Sub-task` dual-relation auto-fills (server-side overené 8/8).
+- **Tags drift post-write:** fetch o ~2 min neskôr ukázal `["NEW", "Referral", "CHANGE"]` namiesto zapísaných `["Project", "NEW"]`. Unknown cause (user manual edit / template / automation). Verify v UI.
+
+**Decisions logged do `referral-akce.md`:** override team-board duplicate-rule + DDL Tags schema-drift.
+
+**Pattern learned:**
+- Team `fromJIRA` DB (data source `35e18e00-108d-816a-88e3-000baf8ced0a`, DB `35e18e00108d802fb960ed61bf982aba`) má native `Parent task` self-relation (limit 1) + `Sub-task` dual reln. Native Notion hierarchy použiteľná aj v JIRA-mirror DB.
+- `notion-update-page` properties s `"Parent task": "<page-url>"` (raw URL string) funguje single-call per page. No JSON wrapper.
+- DDL `ALTER COLUMN ... SET MULTI_SELECT(...)` replaces all options — pri ADD vždy re-specify existing options + colors + nový option.
+
+**Caveat pre next session:** Watch Ria's JIRA sync — parent row nemá `Issue key`, sync outcome unknown.
+
+---
+
 ### Session 2026-05-15 — Referral akce BA review (Fondee)
 
 Prvá reálna initiative landla v vault. Detail:
