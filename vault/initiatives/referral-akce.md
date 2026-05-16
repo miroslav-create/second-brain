@@ -105,6 +105,10 @@ Alt: ak JIRA epic granularity tlačí menej epics → E1+E2 merge do "FE deliver
 - **2026-05-15** — 8 epics + 48 tasks vytvorené v Notion `fromJIRA` DB. Všetky Status=Backlog. Tags: `Epic` + doménový tag (FrontEnd/Back End/Mobilní Appka/FADMIN). Naming: `[REF-E{n}]` epics, `[REF-E{n}.{m}]` tasks. Parent task linknuté.
 - **2026-05-15** — Notion epics+tasks preložené do CZ (Task name + Description). Technické termíny ostali EN.
 - **2026-05-15** — Vytvorená parent Project page v Notion `fromJIRA` DB: `[REF] Referral akce — projekt` (ID 182, URL https://www.notion.so/36118e00108d8123af5ed1cc7261ef18). Issue Type=Project, Status=Backlog. Body = Cíl + Figma + 8 epic links + 3 blockery + full špec paste. 8 epikov (E1–E8) → `Parent task` = parent (dual relation `Sub-task` server-side overené 8/8). DDL: Tag `Project` pridaný do `Tags` multi-select. Caveat: row nemá JIRA `Issue key` → watch budúci Ria sync.
+- **2026-05-15** — Added blocker aggregator task `[REF] Otevřené otázky + blockery (Q4/Q5/Q8/Q10)` (ID 183, URL https://www.notion.so/36118e00108d81589d44cd301b92a80a). Parent task → parent project (182). Body linkuje 12 tasks/epics across 4 open questions. Issue Type=Task, Priority=HIGH.
+- **2026-05-15** — All 57 referral tasks (parent + 8 epics + 48 sub-tasks + aggregator): Description property text moved into page body as `## Popis`, then Description property cleared.
+- **2026-05-15** — Expanded all 56 task bodies (8 epics + 48 sub-tasks) with full dev briefs: Cíl / Scope (in/out) / Akceptační kritéria / Technické poznámky / Odkazy. BLOCKER ⚠️ tags on Q4/Q5/Q8/Q10-tied tasks. Cross-epic dependencies + decision context preserved.
+- **2026-05-15** — Removed `## Závislosti` and `## Sub-tasks` markdown sections from all 56 task bodies — native Notion `Parent task` / `Sub-task` self-relations render below page header, prose duplication eliminated. Feedback memorialized in `feedback-notion-task-body-no-relations.md`.
 
 ## Links
 

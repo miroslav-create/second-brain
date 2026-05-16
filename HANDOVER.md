@@ -25,6 +25,26 @@ For capture rules (verb list, trigger phrases, format): [`.claude/skills/capture
 
 ## Current state (live as of 2026-05-15)
 
+### Session 2026-05-15 (3rd) — Referral task body rework + dev briefs
+
+Tretia session toho istého dňa. Zameranie: enrich referral Notion tasks pre dev handoff + cleanup body duplikátov.
+
+- **Description prop → body:** Pre všetkých 57 referral tasks (parent + 8 epics + 48 sub-tasks + aggregator) text z Description property presunutý do page body ako `## Popis`. Description prop nullified. Parent (182) má body unchanged (full spec), len Description prop cleared.
+- **Blocker aggregator task vytvorený:** `[REF] Otevřené otázky + blockery (Q4/Q5/Q8/Q10)` (ID 183, URL https://www.notion.so/36118e00108d81589d44cd301b92a80a). Parent task = parent project (182). Issue Type=Task, Priority=HIGH, Tags=NEW+Referral. Body linkuje 12 dependent tasks naprieč Q4/Q5/Q8/Q10.
+- **Full dev briefs pre 56 child tasks:** každý task má `## Cíl / Scope (in/out) / Akceptační kritéria / Technické poznámky / Odkazy`. BLOCKER ⚠️ tagy na E3.11 (Q5), E5.4 (blokované E3.11), E7.4 (Q8 edge), E8.5 (Q10). Cross-epic dependencies + decision context z BA review 2026-05-15 zachované.
+- **Cleanup:** `## Závislosti` a `## Sub-tasks` markdown sekcie odstránené zo všetkých 56 child task bodies. Native Notion `Parent task` / `Sub-task` self-relations render natívne pod page header → prose duplikácia eliminovaná.
+
+**Pattern learned:**
+- Notion `fromJIRA` DB ma `Description` property type=rich-text. Nullify cez `update_properties` s `{"Description": null}`. Multi-select properties (Tags) vyžadujú JSON array string format `"[\"NEW\",\"Referral\"]"` v create_pages — plain comma-sep failne s "value must be one of".
+- Pri write rich body do tasks: vynechať `## Závislosti` + `## Sub-tasks` bullety. Sú v page properties (Parent task / Sub-task relácie), Notion ich rendruje samy. Duplikácia v body = stale info. Memory: [`feedback-notion-task-body-no-relations.md`](file:///C:/Users/miroslav.zachar/.claude/projects/c--Users-miroslav-zachar-OneDrive---Direct-Projects-second-brain/memory/feedback-notion-task-body-no-relations.md).
+- Workflow shape: jeden initiative (referral-akce) generoval 3 oddelené sessions cez deň: BA review → parent + epic linking → task body rework. Capture vault zachytávaný incrementálne v `## Change log` initiative noty.
+
+**Caveat pre next session:**
+- Tags drift caveat z session 2 stále platí — fetch ~2 min po write môže ukázať iné Tags than written. Verify v UI.
+- Ria's JIRA sync ešte neproběhol pre nové rows (aggregator 183, parent 182). Watch outcome — pages nemajú `Issue key` field, sync behavior unknown.
+
+---
+
 ### Session 2026-05-15 (cont.) — Notion parent Project page + epic linking
 
 Continuation poobedie. Parent Project page pre referral-akce vytvorená v team `fromJIRA` DB.
